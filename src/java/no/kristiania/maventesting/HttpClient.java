@@ -7,6 +7,10 @@ import java.net.Socket;
 
 public class HttpClient {
 
+    public HttpClient(String host, int port, String requestTarget) {
+
+    }
+
     public static void main(String[] args) throws IOException {
         /*Socket socket = new Socket("urlecho.appspot.com", 80);
         String request = "GET /html HTTP/1.1 \r\n "+
