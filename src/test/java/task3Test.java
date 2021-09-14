@@ -13,7 +13,7 @@ public class task3Test {
     @Test
     void shouldGetSuccessfulResponseCode() throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
-        assertEquals(200, client.getStatusCode());
+        assertEquals(400, client.getStatusCode());
     }
 
 
