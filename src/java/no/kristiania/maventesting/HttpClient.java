@@ -7,48 +7,50 @@ import java.net.Socket;
 
 public class HttpClient {
 
-    public HttpClient(String host, int port, String requestTarget) {
+    private final int statusCode;
 
-    }
-
-    public static void main(String[] args) throws IOException {
-        /*Socket socket = new Socket("urlecho.appspot.com", 80);
-        String request = "GET /html HTTP/1.1 \r\n "+
-        "Host: httpbin.org\r\n"+
-        "Connection: keep-alive\r\n"+
-        "Cache-Control: max-age=0\r\n"+
-        "Upgrade-Insecure-Requests: 1\r\n\r\n";*/
-
-        Socket socket = new Socket("httpbin.org", 80);
+    public HttpClient(String host, int port, String requestTarget) throws IOException {
+        Socket socket = new Socket(host, port);
         socket.getOutputStream().write(
                 ("GET /html HTTP/1.1 \r\n "+
-                "Host: httpbin.org\r\n"+
-                "\r\n").getBytes()
+                        "Host: httpbin.org\r\n"+
+                        "\r\n").getBytes()
         );
 
-        /*socket.getOutputStream().write(request.getBytes());*/
+        //String statusLine = readLine(socket);
 
-        InputStream in = socket.getInputStream();
-        int c;
-        while ( (c = in.read())!= -1){
-            System.out.println((char) c);
-        }
-        /*while ((c = socket.getInputStream().read()) != -1) {
-            System.out.print((char) c);
-        }*/
+        StringBuilder result = new StringBuilder();
 
-
+        String myResponseMessage = result.toString();
+        System.out.println(myResponseMessage);
+        this.statusCode = Integer.parseInt(myResponseMessage.split(" ")[1]);
+        //System.out.print(result);
     }
+
+       private String readline(Socket socket) throws IOException {
+           StringBuilder result = new StringBuilder();
+           InputStream in = socket.getInputStream();
+           int c;
+           while ( (c = in.read())!= '\r' ){
+               result.append((char) c);
+           }
+           return result.toString();
+       }
 
     public int getStatusCode() {
-        return 200;
+
+        return statusCode;
     }
 
 
-    /*public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
-        System.out.println(client);
-    }*/
+        System.out.println(client.getStatusCode());
+    }
+
+
+
 }
 
 
