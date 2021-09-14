@@ -9,6 +9,7 @@ public class HttpClient {
 
     private final int statusCode;
 
+
     public HttpClient(String host, int port, String requestTarget) throws IOException {
         Socket socket = new Socket(host, port);
         socket.getOutputStream().write(
@@ -16,18 +17,26 @@ public class HttpClient {
                         "Host: httpbin.org\r\n"+
                         "\r\n").getBytes()
         );
+
+        StringBuilder result = new StringBuilder();
+        String myResponseMessage = result.toString();
+        System.out.println(myResponseMessage);
+        String statusLine = readLine(socket);
+        this.statusCode = Integer.parseInt(statusLine.split(" ")[1]);
+        //System.out.print(result);
+
+
+    }
+
+    private String readLine(Socket socket) throws IOException {
         StringBuilder result = new StringBuilder();
         InputStream in = socket.getInputStream();
         int c;
-        while ( (c = in.read())!= -1 && c != '\r'  ){
+        while ( (c = in.read()) != '\r'  ){
             result.append((char) c);
         }
-        String myResponseMessage = result.toString();
-        System.out.println(myResponseMessage);
-        this.statusCode = Integer.parseInt(myResponseMessage.split(" ")[1]);
-        //System.out.print(result);
+        return result.toString();
     }
-
 
 
     public int getStatusCode() {
