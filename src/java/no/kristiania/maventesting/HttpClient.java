@@ -16,26 +16,19 @@ public class HttpClient {
                         "Host: httpbin.org\r\n"+
                         "\r\n").getBytes()
         );
-
-        //String statusLine = readLine(socket);
-
         StringBuilder result = new StringBuilder();
-
+        InputStream in = socket.getInputStream();
+        int c;
+        while ( (c = in.read())!= -1 ){
+            result.append((char) c);
+        }
         String myResponseMessage = result.toString();
-        System.out.println(myResponseMessage);
+        //System.out.println(myResponseMessage);
         this.statusCode = Integer.parseInt(myResponseMessage.split(" ")[1]);
         //System.out.print(result);
     }
 
-       private String readline(Socket socket) throws IOException {
-           StringBuilder result = new StringBuilder();
-           InputStream in = socket.getInputStream();
-           int c;
-           while ( (c = in.read())!= '\r' ){
-               result.append((char) c);
-           }
-           return result.toString();
-       }
+
 
     public int getStatusCode() {
 
