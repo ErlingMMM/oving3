@@ -52,7 +52,9 @@ public class HttpClient {
     }
 
 
-
+    public String getHeader(String s) {
+        return null;
+    }
 }
 
 
