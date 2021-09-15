@@ -20,7 +20,12 @@ public class task3Test {
     @Test
     void shouldReadResponseHeaders() throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
-        assertEquals("text/html; charset=utf-8", client.getHeader("Content-Type"));
+        assertEquals("text/html; charset=utf-8", client.getHeader());
     }
 
+    @Test
+    void get404Error() throws IOException {
+        HttpClient error404  = new HttpClient("httpbin.org", 80,"/nothing-here");
+        assertEquals(404,error404.getStatusCode());
+    }
 }

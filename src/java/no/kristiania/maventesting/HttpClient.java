@@ -7,6 +7,7 @@ import java.net.Socket;
 public class HttpClient {
 
     private final int statusCode;
+    private String header = null;
 
 
     public HttpClient(String host, int port, String requestTarget) throws IOException {
@@ -18,11 +19,18 @@ public class HttpClient {
 
         socket.getOutputStream().write(request.getBytes());
 
-        StringBuilder result = new StringBuilder();
-        String myResponseMessage = result.toString();
-        System.out.println(myResponseMessage);
+
         String statusLine = readFirstLine(socket);
         this.statusCode = Integer.parseInt(statusLine.split(" ")[1]);
+
+
+        String responseHeader;
+        while (!((responseHeader = readFirstLine(socket)).isBlank())){
+           String[] arr = responseHeader.split(":");
+            if (arr[0].trim().equals("Content-Type")){
+                this.header = arr[1].trim();
+            }
+        }
     }
 
     private String readFirstLine(Socket socket) throws IOException {
@@ -44,14 +52,9 @@ public class HttpClient {
 
 
 
-    public static void main(String[] args) throws IOException {
-        HttpClient client = new HttpClient("httpbin.org", 80, "/html");
-        System.out.println(client.getStatusCode());
-    }
 
-
-    public String getHeader(String s) {
-        return null;
+    public String getHeader() {
+        return header;
     }
 }
 
