@@ -28,4 +28,7 @@ public class task3Test {
         HttpClient error404  = new HttpClient("httpbin.org", 80,"/nothing-here");
         assertEquals(404,error404.getStatusCode());
     }
+
+
+
 }
