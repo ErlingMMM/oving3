@@ -1,4 +1,6 @@
-import no.kristiania.maventesting.HttpClient;
+package no.kristiania;
+
+import no.kristiania.HttpClient;
 import org.junit.jupiter.api.Test;
 
 

@@ -1,10 +1,8 @@
-package no.kristiania.maventesting;
+package no.kristiania;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
