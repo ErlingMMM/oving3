@@ -3,6 +3,7 @@ package no.kristiania;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.net.http.HttpResponse;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -77,7 +78,9 @@ public class HttpClient {
     }
 
 
-
+    public  executeRequest() {
+        return;
+    }
 }
 
 

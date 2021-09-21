@@ -5,6 +5,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class HttpServer {
+    private final ServerSocket serverSocket;
+
+    public HttpServer(int port) throws IOException {
+
+        serverSocket = new ServerSocket(port);
+         new Thread(this::handleConnections).start();
+        System.out.println("New thread created, running handleConnection");
+    }
+
+
+
+    private void handleConnections() {
+    }
+
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8020);
         Socket socket = serverSocket.accept();
@@ -24,4 +38,10 @@ public class HttpServer {
             System.out.print((char)c);
         }
     }
+
+    public int getActualPort() {
+     return serverSocket.getLocalPort();
+    }
+
+
 }
