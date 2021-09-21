@@ -3,11 +3,14 @@ package no.kristiania.maventesting;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class HttpClient {
 
     private final int statusCode;
-    private final Map<String, String> headerFields = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final String body;
+    private final SortedMap<String, String> headerFields = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 
     public HttpClient(String host, int port, String requestTarget) throws IOException {
@@ -20,20 +23,22 @@ public class HttpClient {
         socket.getOutputStream().write(request.getBytes());
 
 
-        String statusLine = readFirstLine(socket);
+        String statusLine = readLine(socket);
         this.statusCode = Integer.parseInt(statusLine.split(" ")[1]);
 
 
         String responseHeader;
-        while (!((responseHeader = readFirstLine(socket)).isBlank())){
+        while (!((responseHeader = readLine(socket)).isBlank())){
            String[] headerField = responseHeader.split(":");
            headerFields.put(headerField[0].trim(), headerField[1].trim());
         }
+
+        this.body = readLine(socket);
     }
 
 
 
-    private String readFirstLine(Socket socket) throws IOException {
+    private String readLine(Socket socket) throws IOException {
         StringBuilder result = new StringBuilder();
         InputStream in = socket.getInputStream();
         int c;
@@ -41,7 +46,12 @@ public class HttpClient {
             result.append((char) c);
 
         }
+
         return result.toString();
+    }
+
+    public String getBody(){
+        return body;
     }
 
 
@@ -56,10 +66,8 @@ public class HttpClient {
     }
 
     public String getContentLength() {
-        return headerFields.get("content-length");
+        return headerFields.get("ContenT-length");
     }
-
-    //Missing getBody implementation
 }
 
 
