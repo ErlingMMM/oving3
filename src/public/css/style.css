@@ -1,0 +1,11 @@
+body {
+    background-color: aliceblue;
+}
+
+main {
+    padding: 1em;
+    background-color: white;
+    max-width: 60em;
+    margin: auto;
+    border-radius: .5em;
+}
