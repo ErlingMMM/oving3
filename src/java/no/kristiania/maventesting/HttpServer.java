@@ -42,16 +42,15 @@ public class HttpServer extends Thread {
                 String method = getHttpProperties(line, "method");
 
 
-
                 if (method.equals("POST")) new WriteToFile().writeToText(readHeaderFields(socket));
 
                 if (target.equals("/")) target = "/index.html";
+
 
                 boolean fileExists = new File(WEB_ROOT + target).isFile();
 
                 if (fileExists) {
                     File file = new File(WEB_ROOT + target);
-
                     String result = getHtml(file);
                     writeHttpResponse(date, target, out, file, result);
 
